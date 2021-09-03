@@ -24,50 +24,31 @@ defmodule HTTPet do
   ```
   """
 
-  def get(service, uri, headers \\ %{}, opts \\ []) do
-    url = resolve_url(service, uri)
+  alias HTTPet.ServiceUrl
+
+  def get(service, path, headers \\ %{}, opts \\ []) do
+    url = ServiceUrl.build(service, path)
 
     http_client().get(url, merge_headers(headers), opts)
   end
 
-  def post(service, uri, payload, headers \\ %{}, opts \\ []) do
-    url = resolve_url(service, uri)
+  def post(service, path, payload, headers \\ %{}, opts \\ []) do
+    url = ServiceUrl.build(service, path)
     encoded_payload = Jason.encode(payload)
 
     http_client().post(url, encoded_payload, merge_headers(headers), opts)
   end
 
-  def put(service, uri, payload, headers \\ %{}, opts \\ []) do
-    url = resolve_url(service, uri)
+  def put(service, path, payload, headers \\ %{}, opts \\ []) do
+    url = ServiceUrl.build(service, path)
     encoded_payload = Jason.encode(payload)
 
     http_client().put(url, encoded_payload, merge_headers(headers), opts)
   end
 
-  def delete(service, uri, headers \\ %{}, opts \\ []) do
-    url = resolve_url(service, uri)
+  def delete(service, path, headers \\ %{}, opts \\ []) do
+    url = ServiceUrl.build(service, path)
     http_client().delete(url, merge_headers(headers), opts)
-  end
-
-  defp resolve_url(service, uri) do
-    service
-    |> resolve_service_host()
-    |> resolve_service_url(uri)
-  end
-
-  defp resolve_service_host(service) when is_atom(service) do
-    :httpet
-    |> Application.get_env(:hosts, [])
-    |> Keyword.get(service, Atom.to_string(service))
-  end
-
-  defp resolve_service_host(service) when is_binary(service), do: service
-
-  defp resolve_service_url(host, uri) do
-    host
-    |> URI.parse()
-    |> URI.merge(uri)
-    |> URI.to_string()
   end
 
   # config :httpet, :http_client, HTTPet.Clients.HTTPoison
