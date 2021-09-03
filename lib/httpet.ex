@@ -24,54 +24,42 @@ defmodule HTTPet do
   ```
   """
 
-  alias HTTPet.ServiceUrl
+  alias HTTPet.{RequestHeaders, ServiceUrl}
 
   def get(service, path, headers \\ %{}, opts \\ []) do
     url = ServiceUrl.build(service, path)
+    headers = RequestHeaders.add_defaults(headers)
 
-    http_client().get(url, merge_headers(headers), opts)
+    http_client().get(url, headers, opts)
   end
 
   def post(service, path, payload, headers \\ %{}, opts \\ []) do
     url = ServiceUrl.build(service, path)
-    encoded_payload = Jason.encode(payload)
+    headers = RequestHeaders.add_defaults(headers)
 
-    http_client().post(url, encoded_payload, merge_headers(headers), opts)
+    with {:ok, payload} <- Jason.encode(payload) do
+      http_client().post(url, payload, headers, opts)
+    end
   end
 
   def put(service, path, payload, headers \\ %{}, opts \\ []) do
     url = ServiceUrl.build(service, path)
-    encoded_payload = Jason.encode(payload)
+    headers = RequestHeaders.add_defaults(headers)
 
-    http_client().put(url, encoded_payload, merge_headers(headers), opts)
+    with {:ok, payload} <- Jason.encode(payload) do
+      http_client().put(url, payload, headers, opts)
+    end
   end
 
   def delete(service, path, headers \\ %{}, opts \\ []) do
     url = ServiceUrl.build(service, path)
-    http_client().delete(url, merge_headers(headers), opts)
+    headers = RequestHeaders.add_defaults(headers)
+
+    http_client().delete(url, headers, opts)
   end
 
   # config :httpet, :http_client, HTTPet.Clients.HTTPoison
   defp http_client do
     Application.get_env(:httpet, :http_client, HTTPet.Clients.HTTPoison)
-  end
-
-  defp tracer do
-    Application.get_env(:httpet, :tracer)
-  end
-
-  defp merge_headers(headers) do
-    common_header = %{"Content-Type" => "application/json"}
-
-    case tracer() do
-      nil ->
-        common_header
-
-      tracer ->
-        common_header
-        |> Map.put("x-datadog-trace-id", tracer.current_trace_id())
-        |> Map.put("x-datadog-parent-id", tracer.current_span_id())
-    end
-    |> Map.merge(headers)
   end
 end

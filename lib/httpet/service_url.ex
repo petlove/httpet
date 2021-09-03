@@ -14,8 +14,6 @@ defmodule HTTPet.ServiceUrl do
   defp resolve_service_host(service) when is_binary(service), do: service
 
   defp resolve_service_url(host, path) do
-    URI.parse()
-
     host
     |> URI.parse()
     |> URI.merge(path)
