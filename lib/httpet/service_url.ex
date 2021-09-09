@@ -8,7 +8,7 @@ defmodule HTTPet.ServiceUrl do
   defp resolve_service_host(service) when is_atom(service) do
     :httpet
     |> Application.get_env(:hosts, [])
-    |> Keyword.get(service, Atom.to_string(service))
+    |> Keyword.get(service, "http://" <> Atom.to_string(service))
   end
 
   defp resolve_service_host(service) when is_binary(service), do: service
