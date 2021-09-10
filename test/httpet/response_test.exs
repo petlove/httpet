@@ -14,11 +14,12 @@ defmodule HTTPet.ResponseTest do
   describe "handle/1" do
     test "given a list with valid body, headers and status_code, it returns a Response's struct" do
       valid_params = Map.to_list(@valid_params)
+
       assert %Response{
-                body: %{"json_valid" => "yes"},
-                headers: %{"Content-Type" => "application/json"},
-                status_code: 299
-              } = Response.handle(valid_params)
+               body: %{"json_valid" => "yes"},
+               headers: %{"Content-Type" => "application/json"},
+               status_code: 299
+             } = Response.handle(valid_params)
     end
   end
 
