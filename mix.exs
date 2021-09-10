@@ -7,7 +7,14 @@ defmodule HTTPet.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -22,6 +29,7 @@ defmodule HTTPet.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:excoveralls, "~> 0.14.2", only: :test},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:mox, "~> 1.0", only: :test}
