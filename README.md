@@ -1,3 +1,5 @@
+<img src="https://g.codefresh.io/api/badges/pipeline/petlove/HTTPet%2Fcheck?key=eyJhbGciOiJIUzI1NiJ9.NWIyN2RiNmQyYjY5MjEwMDAxOTA1ODdm.qez6HSUlYqd-f3hjUFyhvQ5ufsmpe8IzOpKpQ_a0RPs&date=1631649692026" />
+
 # HTTPet
 
 HTTP client to do calls between services inside the Petlove's ecosystem.
