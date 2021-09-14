@@ -1,4 +1,6 @@
 defmodule HTTPet.ServiceUrl do
+  @moduledoc false
+
   def build(service, path) do
     service
     |> resolve_service_host()

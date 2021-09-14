@@ -1,4 +1,6 @@
 defmodule HTTPet.Clients.HTTPoison do
+  @moduledoc false
+
   alias HTTPet.Clients.ClientBehaviour
   alias HTTPet.Response
 

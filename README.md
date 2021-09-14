@@ -1,21 +1,26 @@
 # HTTPet
 
-**TODO: Add description**
+HTTP client to do calls between services inside the Petlove's ecosystem.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `httpet` to your list of dependencies in `mix.exs`:
+## Configuration
 
 ```elixir
-def deps do
-  [
-    {:httpet, "~> 0.1.0"}
-  ]
-end
+config :httpet, :tracer, MyApp.Tracer
+
+config :httpet, :routes,
+  beagle: System.get_env("BEAGLE_URL"),
+  hamster: System.get_env("HAMSTER_URL"),
+  weasel: System.get_env("WEASEL_URL")
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/httpet](https://hexdocs.pm/httpet).
+## Usage
 
+`HTTPet.get(:weasel, "/users/me")`
+
+`HTTPet.get(:weasel, "/users/me", %{"my-custom-header" => "my-custom-value"})`
+
+`HTTPet.put(:weasel, "/users/me", %{name: "my user name"})`
+
+`HTTPet.put(:weasel, "/users/me", %{name: "my user name"}, %{"my-custom-header" => "my-custom-value"})`

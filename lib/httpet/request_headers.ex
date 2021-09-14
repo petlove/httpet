@@ -1,4 +1,6 @@
 defmodule HTTPet.RequestHeaders do
+  @moduledoc false
+
   def add_defaults(headers) do
     current_trace_id = unless is_nil(tracer()), do: tracer().current_trace_id
     current_span_id = unless is_nil(tracer()), do: tracer().current_span_id

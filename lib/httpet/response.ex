@@ -1,4 +1,6 @@
 defmodule HTTPet.Response do
+  @moduledoc false
+
   @type t :: %__MODULE__{
           body: map() | String.t(),
           headers: map(),

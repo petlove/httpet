@@ -29,6 +29,7 @@ defmodule HTTPet.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.14.2", only: :test},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
