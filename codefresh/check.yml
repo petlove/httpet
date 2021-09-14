@@ -1,0 +1,39 @@
+version: "1.0"
+
+stages:
+  - "clone"
+  - "checks"
+  - "test"
+
+steps:
+  clone:
+    title: "Cloning repository"
+    type: "git-clone"
+    repo: "petlove/httpet"
+    revision: "${{CF_BRANCH}}"
+    git: "github-petlove"
+    stage: "clone"
+
+  checks:
+    type: "freestyle"
+    image: "elixir:latest"
+    working_directory: "${{clone}}"
+    commands:
+      - "mix local.hex --force"
+      - "mix deps.get"
+      - "mix local.rebar --force"
+      - "mix credo --strict"
+      - "mix format --check-formatted"
+    stage: "checks"
+
+  test:
+    title: "Running test"
+    type: "freestyle"
+    image: "elixir:latest"
+    working_directory: "${{clone}}"
+    commands:
+      - "mix local.hex --force"
+      - "mix deps.get"
+      - "mix local.rebar --force"
+      - "mix test --trace"
+    stage: "test"

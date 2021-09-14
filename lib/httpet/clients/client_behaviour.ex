@@ -1,4 +1,6 @@
 defmodule HTTPet.Clients.ClientBehaviour do
+  @moduledoc false
+
   alias HTTPet.Response
 
   @callback delete(String.t(), map(), list()) :: {:ok, Response.t()} | {:error, any()}

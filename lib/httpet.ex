@@ -1,27 +1,6 @@
 defmodule HTTPet do
   @moduledoc """
   Documentation for `HTTPet`.
-
-  Usage:
-
-  `HTTPet.get(:weasel, "/users/me")`
-
-  `HTTPet.get(:weasel, "/users/me", %{"my-custom-header" => "my-custom-value"})`
-
-  `HTTPet.put(:weasel, "/users/me", %{name: "my user name"})`
-
-  Configuration:
-
-  ```
-  config :httpet, :hosts,
-    weasel: "asdasd",
-    shark: "asdasda",
-    beagle: "asdads"
-
-  config :httpet, :http_client, HTTPet.Clients.HTTPoison # (default)
-
-  config :httpet, :tracer, MyApp.Tracer # (only supported Tracers that uses Spandex.Tracer)
-  ```
   """
 
   alias HTTPet.{RequestHeaders, ServiceUrl}
