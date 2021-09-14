@@ -4,6 +4,12 @@ HTTP client to do calls between services inside the Petlove's ecosystem.
 
 ## Installation
 
+Inside your deps on `mix.exs`:
+
+```elixir
+  {:httpet, git: "git@github.com:petlove/HTTPet.git"},
+```
+
 ## Configuration
 
 ```elixir
