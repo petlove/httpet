@@ -18,17 +18,17 @@ Inside your deps on `mix.exs`:
 config :httpet, :tracer, MyApp.Tracer
 
 config :httpet, :routes,
-  beagle: System.get_env("BEAGLE_URL"),
-  hamster: System.get_env("HAMSTER_URL"),
-  weasel: System.get_env("WEASEL_URL")
+  my_internal_service: System.get_env("INTERNAL_SERVICE_URL")
 ```
 
 ## Usage
 
-`HTTPet.get(:weasel, "/users/me")`
+`HTTPet.get(:my_internal_service, "/users/me")`
 
-`HTTPet.get(:weasel, "/users/me", %{"my-custom-header" => "my-custom-value"})`
+`HTTPet.get(:my_internal_service, "/users/me", %{"my-custom-header" => "my-custom-value"})`
 
-`HTTPet.put(:weasel, "/users/me", %{name: "my user name"})`
+`HTTPet.put(:my_internal_service, "/users/me", %{name: "my user name"})`
 
-`HTTPet.put(:weasel, "/users/me", %{name: "my user name"}, %{"my-custom-header" => "my-custom-value"})`
+`HTTPet.put(:my_internal_host, "/users/me", %{name: "my user name"}, %{"my-custom-header" => "my-custom-value"})`
+
+`HTTPet.post("http://petlove.com.br", "/users/me", %{name: "my user name"}, %{"my-custom-header" => "my-custom-value"})`
