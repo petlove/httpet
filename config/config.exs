@@ -1,5 +1,9 @@
 import Config
 
+config :httpet,
+  hosts: [],
+  tracer: nil
+
 if config_env() == :test do
   config :httpet, :hosts, fake_service: "http://0.0.0.0"
 

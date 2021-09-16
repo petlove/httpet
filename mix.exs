@@ -22,7 +22,11 @@ defmodule HTTPet.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {HTTPet.Application, []}
+      mod: {HTTPet.Application, []},
+      env: [
+        hosts: [],
+        tracer: nil
+      ]
     ]
   end
 
