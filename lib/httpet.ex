@@ -5,14 +5,14 @@ defmodule HTTPet do
 
   alias HTTPet.{RequestHeaders, ServiceUrl}
 
-  def get(service, path, headers \\ %{}, opts \\ []) do
+  def get(service, path, headers \\ [], opts \\ []) do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
 
     http_client().get(url, headers, opts)
   end
 
-  def post(service, path, payload, headers \\ %{}, opts \\ []) do
+  def post(service, path, payload, headers \\ [], opts \\ []) do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
 
@@ -21,7 +21,7 @@ defmodule HTTPet do
     end
   end
 
-  def put(service, path, payload, headers \\ %{}, opts \\ []) do
+  def put(service, path, payload, headers \\ [], opts \\ []) do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
 
@@ -30,7 +30,7 @@ defmodule HTTPet do
     end
   end
 
-  def delete(service, path, headers \\ %{}, opts \\ []) do
+  def delete(service, path, headers \\ [], opts \\ []) do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
 

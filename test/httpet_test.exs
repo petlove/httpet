@@ -8,11 +8,11 @@ defmodule HTTPetTest do
 
   setup :verify_on_exit!
 
-  @default_headers %{
-    "Content-Type" => "application/json",
-    "x-datadog-trace-id" => nil,
-    "x-datadog-parent-id" => nil
-  }
+  @default_headers [
+    "Content-Type": "application/json",
+    "x-datadog-trace-id": nil,
+    "x-datadog-parent-id": nil
+  ]
 
   describe "HTTP Verbs" do
     test "get/4 a successfull call via the HTTP client, returns a tuple with :ok and a %Response{} struct" do
