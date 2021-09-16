@@ -17,7 +17,7 @@ Inside your deps on `mix.exs`:
 ```elixir
 config :httpet, :tracer, MyApp.Tracer
 
-config :httpet, :routes,
+config :httpet, :hosts,
   my_internal_service: System.get_env("INTERNAL_SERVICE_URL")
 ```
 
