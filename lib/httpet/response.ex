@@ -12,7 +12,7 @@ defmodule HTTPet.Response do
   defstruct @enforce_keys
 
   def handle(body: body, headers: headers, status_code: status_code) do
-    case Jason.decode(body) do
+    case Jason.decode(body, keys: :atoms) do
       {:ok, decoded_body} ->
         struct(__MODULE__,
           body: decoded_body,

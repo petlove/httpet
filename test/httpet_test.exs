@@ -28,7 +28,7 @@ defmodule HTTPetTest do
 
       assert {:ok,
               %Response{
-                body: %{"valid_json" => "yes"},
+                body: %{valid_json: "yes"},
                 headers: %{"Content-Type" => "application/json"},
                 status_code: 299
               }} == HTTPet.get(:fake_service, "uri/get")
@@ -47,7 +47,7 @@ defmodule HTTPetTest do
 
       assert {:ok,
               %Response{
-                body: %{"valid_json" => "yes"},
+                body: %{valid_json: "yes"},
                 headers: %{"Content-Type" => "application/json"},
                 status_code: 499
               }} == HTTPet.delete(:fake_service, "uri/delete")
@@ -69,7 +69,7 @@ defmodule HTTPetTest do
 
       assert {:ok,
               %Response{
-                body: %{"valid_json" => "yes"},
+                body: %{valid_json: "yes"},
                 headers: %{"Content-Type" => "application/json"},
                 status_code: 299
               }} == HTTPet.post(:fake_service, "uri/post", %{field: "value"})
@@ -91,7 +91,7 @@ defmodule HTTPetTest do
 
       assert {:ok,
               %Response{
-                body: %{"valid_json" => "yes"},
+                body: %{valid_json: "yes"},
                 headers: %{"Content-Type" => "application/json"},
                 status_code: 499
               }} == HTTPet.put(:fake_service, "uri/put", %{field: "value"})

@@ -16,7 +16,7 @@ defmodule HTTPet.ResponseTest do
       valid_params = Map.to_list(@valid_params)
 
       assert %Response{
-               body: %{"json_valid" => "yes"},
+               body: %{json_valid: "yes"},
                headers: %{"Content-Type" => "application/json"},
                status_code: 299
              } = Response.handle(valid_params)
