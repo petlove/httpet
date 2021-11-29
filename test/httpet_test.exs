@@ -17,7 +17,9 @@ defmodule HTTPetTest do
   describe "HTTP Verbs" do
     test "get/4 a successfull call via the HTTP client, returns a tuple with :ok and a %Response{} struct" do
       ClientBehaviourMock
-      |> expect(:get, 1, fn "http://0.0.0.0/uri/get", @default_headers, [] ->
+      |> expect(:get, 1, fn "http://0.0.0.0/uri/get",
+                            @default_headers,
+                            [timeout: 50_000, recv_timeout: 50_000] ->
         {:ok,
          Response.handle(
            body: "{\"valid_json\":\"yes\"}",
@@ -36,7 +38,9 @@ defmodule HTTPetTest do
 
     test "delete/4 a successfull call via the HTTP client, returns a tuple with :ok and a %Response{} struct" do
       ClientBehaviourMock
-      |> expect(:delete, 1, fn "http://0.0.0.0/uri/delete", @default_headers, [] ->
+      |> expect(:delete, 1, fn "http://0.0.0.0/uri/delete",
+                               @default_headers,
+                               [timeout: 50_000, recv_timeout: 50_000] ->
         {:ok,
          Response.handle(
            body: "{\"valid_json\":\"yes\"}",
@@ -58,7 +62,7 @@ defmodule HTTPetTest do
       |> expect(:post, 1, fn "http://0.0.0.0/uri/post",
                              "{\"field\":\"value\"}",
                              @default_headers,
-                             [] ->
+                             [timeout: 50_000, recv_timeout: 50_000] ->
         {:ok,
          Response.handle(
            body: "{\"valid_json\":\"yes\"}",
@@ -80,7 +84,7 @@ defmodule HTTPetTest do
       |> expect(:put, 1, fn "http://0.0.0.0/uri/put",
                             "{\"field\":\"value\"}",
                             @default_headers,
-                            [] ->
+                            [timeout: 50_000, recv_timeout: 50_000] ->
         {:ok,
          Response.handle(
            body: "{\"valid_json\":\"yes\"}",
@@ -95,6 +99,31 @@ defmodule HTTPetTest do
                 headers: %{"Content-Type" => "application/json"},
                 status_code: 499
               }} == HTTPet.put(:fake_service, "uri/put", %{field: "value"})
+    end
+
+    test "put/5 a successfull call via the HTTP client, overrides service config via params" do
+      ClientBehaviourMock
+      |> expect(:put, 1, fn "http://0.0.0.0/uri/put",
+                            "{\"field\":\"value\"}",
+                            @default_headers,
+                            [recv_timeout: 50_000, timeout: 40_000] ->
+        {:ok,
+         Response.handle(
+           body: "{\"valid_json\":\"yes\"}",
+           headers: %{"Content-Type" => "application/json"},
+           status_code: 499
+         )}
+      end)
+
+      assert {:ok,
+              %Response{
+                body: %{valid_json: "yes"},
+                headers: %{"Content-Type" => "application/json"},
+                status_code: 499
+              }} ==
+               HTTPet.put(:fake_service, "uri/put", %{field: "value"}, @default_headers,
+                 timeout: 40_000
+               )
     end
   end
 end
