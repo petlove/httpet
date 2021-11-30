@@ -9,7 +9,7 @@ defmodule HTTPet do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
 
-    http_client().get(url, headers, opts)
+    http_client().get(url, headers, merge_service_options(service, opts))
   end
 
   def post(service, path, payload, headers \\ [], opts \\ []) do
@@ -17,7 +17,7 @@ defmodule HTTPet do
     headers = RequestHeaders.add_defaults(headers)
 
     with {:ok, payload} <- Jason.encode(payload) do
-      http_client().post(url, payload, headers, opts)
+      http_client().post(url, payload, headers, merge_service_options(service, opts))
     end
   end
 
@@ -26,7 +26,7 @@ defmodule HTTPet do
     headers = RequestHeaders.add_defaults(headers)
 
     with {:ok, payload} <- Jason.encode(payload) do
-      http_client().put(url, payload, headers, opts)
+      http_client().put(url, payload, headers, merge_service_options(service, opts))
     end
   end
 
@@ -34,11 +34,19 @@ defmodule HTTPet do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
 
-    http_client().delete(url, headers, opts)
+    http_client().delete(url, headers, merge_service_options(service, opts))
   end
 
   # config :httpet, :http_client, HTTPet.Clients.HTTPoison
   defp http_client do
     Application.get_env(:httpet, :http_client, HTTPet.Clients.HTTPoison)
+  end
+
+  defp merge_service_options(service, opts) do
+    :httpet
+    |> Application.get_env(:services, [])
+    |> Keyword.get(service, [])
+    |> Keyword.delete(:url)
+    |> Keyword.merge(opts)
   end
 end
