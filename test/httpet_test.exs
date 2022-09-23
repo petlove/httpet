@@ -101,6 +101,28 @@ defmodule HTTPetTest do
               }} == HTTPet.put(:fake_service, "uri/put", %{field: "value"})
     end
 
+    test "patch/5 a successfull call via the HTTP client, returns a tuple with :ok and a %Response{} struct" do
+      ClientBehaviourMock
+      |> expect(:patch, 1, fn "http://0.0.0.0/uri/patch",
+                              "{\"field\":\"value\"}",
+                              @default_headers,
+                              [timeout: 50_000, recv_timeout: 50_000] ->
+        {:ok,
+         Response.handle(
+           body: "{\"valid_json\":\"yes\"}",
+           headers: %{"Content-Type" => "application/json"},
+           status_code: 202
+         )}
+      end)
+
+      assert {:ok,
+              %Response{
+                body: %{valid_json: "yes"},
+                headers: %{"Content-Type" => "application/json"},
+                status_code: 202
+              }} == HTTPet.patch(:fake_service, "uri/patch", %{field: "value"})
+    end
+
     test "put/5 a successfull call via the HTTP client, overrides service config via params" do
       ClientBehaviourMock
       |> expect(:put, 1, fn "http://0.0.0.0/uri/put",

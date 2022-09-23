@@ -30,6 +30,15 @@ defmodule HTTPet do
     end
   end
 
+  def patch(service, path, payload, headers \\ [], opts \\ []) do
+    url = ServiceUrl.build(service, path)
+    headers = RequestHeaders.add_defaults(headers)
+
+    with {:ok, payload} <- Jason.encode(payload) do
+      http_client().patch(url, payload, headers, merge_service_options(service, opts))
+    end
+  end
+
   def delete(service, path, headers \\ [], opts \\ []) do
     url = ServiceUrl.build(service, path)
     headers = RequestHeaders.add_defaults(headers)
