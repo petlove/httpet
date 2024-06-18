@@ -46,6 +46,15 @@ defmodule HTTPet do
     http_client().delete(url, headers, merge_service_options(service, opts))
   end
 
+  def request(service, method, path, payload, headers \\ [], opts \\ []) do
+    url = ServiceUrl.build(service, path)
+    headers = RequestHeaders.add_defaults(headers)
+
+    with {:ok, payload} <- Jason.encode(payload) do
+      http_client().request(method, url, payload, headers, merge_service_options(service, opts))
+    end
+  end
+
   # config :httpet, :http_client, HTTPet.Clients.HTTPoison
   defp http_client do
     Application.get_env(:httpet, :http_client, HTTPet.Clients.HTTPoison)

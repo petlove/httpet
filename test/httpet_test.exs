@@ -147,5 +147,28 @@ defmodule HTTPetTest do
                  timeout: 40_000
                )
     end
+
+    test "request/5 a successfull call via the HTTP client, returns a tuple with :ok and a %Response{} struct" do
+      ClientBehaviourMock
+      |> expect(:request, 1, fn :get,
+                                "http://0.0.0.0/uri/request",
+                                "{\"field\":\"value\"}",
+                                @default_headers,
+                                [timeout: 50_000, recv_timeout: 50_000] ->
+        {:ok,
+         Response.handle(
+           body: "{\"valid_json\":\"yes\"}",
+           headers: %{"Content-Type" => "application/json"},
+           status_code: 200
+         )}
+      end)
+
+      assert {:ok,
+              %Response{
+                body: %{valid_json: "yes"},
+                headers: %{"Content-Type" => "application/json"},
+                status_code: 200
+              }} == HTTPet.request(:fake_service, :get, "uri/request", %{field: "value"})
+    end
   end
 end
