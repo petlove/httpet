@@ -41,6 +41,13 @@ defmodule HTTPet.Clients.HTTPoison do
     |> handle_response()
   end
 
+  @impl ClientBehaviour
+  def request(method, url, body, headers, options) do
+    method
+    |> HTTPoison.request(url, body, headers, options)
+    |> handle_response()
+  end
+
   defp handle_response(response) do
     case response do
       {:ok, %{body: body, headers: headers, status_code: status_code}} ->

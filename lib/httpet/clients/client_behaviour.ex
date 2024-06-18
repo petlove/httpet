@@ -8,4 +8,6 @@ defmodule HTTPet.Clients.ClientBehaviour do
   @callback post(String.t(), any(), list(), list()) :: {:ok, Response.t()} | {:error, any()}
   @callback put(String.t(), any(), list(), list()) :: {:ok, Response.t()} | {:error, any()}
   @callback patch(String.t(), any(), list(), list()) :: {:ok, Response.t()} | {:error, any()}
+  @callback request(atom(), String.t(), any(), list(), list()) ::
+              {:ok, Response.t()} | {:error, any()}
 end
