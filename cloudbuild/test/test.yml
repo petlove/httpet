@@ -1,0 +1,53 @@
+steps:
+  - id: deps
+    name: "hexpm/elixir:1.19.5-erlang-28.5.0.4-debian-bookworm-20260713-slim"
+    env:
+      - "MIX_ENV=test"
+      - "HOME=/workspace"
+    entrypoint: sh
+    args:
+      - "-c"
+      - |
+        set -e
+        mix local.hex --force && mix local.rebar --force
+        mix deps.get
+        mix deps.compile
+    waitFor: ["-"]
+
+  - id: elixir_linter
+    name: "hexpm/elixir:1.19.5-erlang-28.5.0.4-debian-bookworm-20260713-slim"
+    env:
+      - "MIX_ENV=test"
+      - "HOME=/workspace"
+    entrypoint: sh
+    args:
+      - "-c"
+      - mix credo --strict && mix format --check-formatted
+    waitFor: ["deps"]
+
+  - id: elixir_test
+    name: "hexpm/elixir:1.19.5-erlang-28.5.0.4-debian-bookworm-20260713-slim"
+    env:
+      - "MIX_ENV=test"
+      - "HOME=/workspace"
+    entrypoint: sh
+    args:
+      - "-c"
+      - mix test --trace
+    waitFor: ["deps"]
+
+  - id: elixir_security
+    name: "hexpm/elixir:1.19.5-erlang-28.5.0.4-debian-bookworm-20260713-slim"
+    env:
+      - "MIX_ENV=test"
+      - "HOME=/workspace"
+    entrypoint: sh
+    args:
+      - "-c"
+      - mix sobelow --exit --skip
+    waitFor: ["elixir_linter", "elixir_test"]
+
+timeout: 1200s
+options:
+  pool:
+    name: "projects/$PROJECT_ID/locations/us-east1/workerPools/private-worker-pool-medium"
