@@ -4,19 +4,27 @@ HTTP client to do calls between services inside the Petlove's ecosystem.
 
 ## Installation
 
-Inside your deps on `mix.exs`:
+Inside your deps on `mix.exs`, with the latest version from
+[hex.pm](https://hex.pm/packages/httpet):
 
 ```elixir
-  {:httpet, git: "git@github.com:petlove/HTTPet.git"},
+  {:httpet, "~> X.Y"},
 ```
+
+Releases are described in [RELEASING.md](https://github.com/petlove/httpet/blob/main/RELEASING.md).
 
 ## Configuration
 
 ```elixir
 config :httpet, :tracer, MyApp.Tracer
 
-config :httpet, :hosts,
-  my_internal_service: System.get_env("INTERNAL_SERVICE_URL")
+config :httpet, :services,
+  my_internal_service: [
+    url: System.get_env("INTERNAL_SERVICE_URL"),
+    # Optional, passed to HTTPoison
+    timeout: 10_000,
+    recv_timeout: 10_000
+  ]
 ```
 
 ## Usage

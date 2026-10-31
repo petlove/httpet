@@ -1,7 +1,7 @@
 import Config
 
 config :httpet,
-  hosts: [],
+  services: [],
   tracer: nil
 
 if config_env() == :test do
