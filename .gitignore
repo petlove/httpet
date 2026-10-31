@@ -22,5 +22,8 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 httpet-*.tar
 
+# Written by Hex in installed deps; read by mix.exs for the version, never committed.
+/hex_metadata.config
+
 # Temporary files, for example, from tests.
 /tmp/
