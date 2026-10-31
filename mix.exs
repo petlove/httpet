@@ -12,6 +12,7 @@ defmodule HTTPet.MixProject do
       description: "HTTP client for calls between services inside the Petlove ecosystem",
       package: package(),
       source_url: "https://github.com/petlove/httpet",
+      docs: [main: "readme", extras: ["README.md"]],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
@@ -28,7 +29,7 @@ defmodule HTTPet.MixProject do
       extra_applications: [:logger],
       mod: {HTTPet.Application, []},
       env: [
-        hosts: [],
+        services: [],
         tracer: nil
       ]
     ]

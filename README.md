@@ -18,8 +18,13 @@ Releases are described in [RELEASING.md](RELEASING.md).
 ```elixir
 config :httpet, :tracer, MyApp.Tracer
 
-config :httpet, :hosts,
-  my_internal_service: System.get_env("INTERNAL_SERVICE_URL")
+config :httpet, :services,
+  my_internal_service: [
+    url: System.get_env("INTERNAL_SERVICE_URL"),
+    # Optional, passed to HTTPoison
+    timeout: 10_000,
+    recv_timeout: 10_000
+  ]
 ```
 
 ## Usage
