@@ -8,7 +8,7 @@ Inside your deps on `mix.exs`, with the latest version from
 [hex.pm](https://hex.pm/packages/httpet):
 
 ```elixir
-  {:httpet, "~> 0.1"},
+  {:httpet, "~> 0.1.0"},
 ```
 
 Releases are described in [RELEASING.md](https://github.com/petlove/httpet/blob/main/RELEASING.md).
