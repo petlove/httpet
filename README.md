@@ -11,7 +11,7 @@ Inside your deps on `mix.exs`, with the latest version from
   {:httpet, "~> X.Y"},
 ```
 
-Releases are described in [RELEASING.md](RELEASING.md).
+Releases are described in [RELEASING.md](https://github.com/petlove/httpet/blob/main/RELEASING.md).
 
 ## Configuration
 
